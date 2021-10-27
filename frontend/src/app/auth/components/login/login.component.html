@@ -1,0 +1,41 @@
+<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+      <div class="flex justify-center items-center">
+        <img class="mr-1.5 h-12 w-auto" src="https://img.icons8.com/color/48/ffffff/nfc-n.png">
+        <h2 class="text-center text-3xl font-extrabold text-gray-900">
+          Sign in
+        </h2>
+      </div>
+
+      <form [formGroup]="form" class="mt-8 space-y-6">
+        <div class="rounded-md shadow-sm -space-y-px">
+
+          <div class="my-5">
+            <label for="email-address" class="sr-only">Username</label>
+            <input formControlName="username" type="email" required class="w-full border-gray-400 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username">
+          </div>
+
+          <div class="my-5">
+            <label for="password" class="sr-only">Password</label>
+            <input formControlName="password" type="password" class="w-full border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none" placeholder="Password">
+          </div>
+        </div>
+  
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input id="remember-me" name="remember-me" type="checkbox" class="outline-none h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+            <label for="remember-me" class="ml-2 block text-sm text-gray-900">
+              Remember me
+            </label>
+          </div>
+
+        </div>
+  
+        <button (click)="login($event)" type="submit" 
+        class="w-full py-2.5 text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none">
+            Sign in
+        </button>
+      </form>
+    </div>
+  </div>
+  
