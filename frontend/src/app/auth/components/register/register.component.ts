@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth/auth.service';
 
 
 @Component({
@@ -12,10 +13,12 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
 
   public form: FormGroup = this.buildForm();
+  public anyError = false;
   public wrongPass = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -34,12 +37,20 @@ export class RegisterComponent implements OnInit {
     event.preventDefault();
     if(this.form.value.password !== this.form.value.confirmPass) this.wrongPass = true;
     console.log(this.form.value)
-    // if(this.form.valid){
-    //   const value = this.form.value;
-    //   this.authService.createUser(value.email, value.password)
-    //     .then(() => this.router.navigate(['/login']))
-    //     .catch((err: any) => console.error(err));
-    // }
+
+    const user = {
+      username: this.form.value.username,
+      password: this.form.value.password
+    };
+
+    this.authService.singup(user).subscribe( (res: any) => {
+      if(res === 'error'){
+        this.anyError = true
+        return;
+      };
+      this.anyError = false;
+      this.router.navigate(['/login']);
+    })
   }
 
   refreshValidatorConfirmPass(): void{

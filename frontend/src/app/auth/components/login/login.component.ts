@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     event.preventDefault();
 
     const user = this.form.value;
-    this.authService.signin(user).subscribe( (res: any) => {
+    this.authService.singin(user).subscribe( (res: any) => {
       if(typeof res !== 'object'){
         this.wrongData = true
         return

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users(
     `active` TINYINT(1) NOT NULL DEFAULT 1
 );
 
-INSERT INTO users(user_name, password) VALUES('camilo', '123');
+INSERT INTO users(user_name, password) VALUES('camila', '123');
 
 CREATE TABLE IF NOT EXISTS companies(
     company_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,

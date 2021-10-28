@@ -16,8 +16,11 @@ export class AuthService {
     private router: Router
   ) { }
 
-  signin(user: any){
-    return this.http.post(`${this.URL}/users/singin`, user);
+  singin(user: any){
+    return this.http.post(`${this.URL}/singin`, user);
+  }
+  singup(user: any){
+    return this.http.post(`${this.URL}/singup`, user);
   }
 
   logged():boolean{

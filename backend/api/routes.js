@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
+//variables de entorno
 const secretWord = 'secret';
 
 const connection = require('./connection/connection');
@@ -30,6 +31,19 @@ router.post('/singin', (req, res) => {
                 res.json('Invalid Username or password')
             }
         } else{
+            console.log(err);
+        }
+    });
+});
+
+router.post('/singup', (req, res) => {
+    const {username, password} = req.body;
+    connection.query(`INSERT INTO users(user_name, password) VALUES("${username}", "${password}")`,
+    (err, rows, fields) => {
+        if(!err){
+            res.json('User created');
+        } else{
+            res.json('error');
             console.log(err);
         }
     });
