@@ -54,3 +54,10 @@ VALUES('Antong Holdings', '123456789', 'Luiciana Limarez', 'luicianolimares@exam
 ('Maersk', '852852852', 'Camila Bauer', 'camilab@example.com'),
 ('MSC', '456546456', 'Maxwell Sevillano Carrasco', 'max@example.com'),
 ('One', '111111111', 'One Uno', 'one1@example.br');
+
+
+SELECT c.*, COUNT(shipment_id) AS c_shipments
+FROM companies as c 
+LEFT JOIN shipments as s
+    on c.company_id = s.company_id
+GROUP BY company_id;

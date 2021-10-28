@@ -5,13 +5,15 @@ import { ForwarderRoutingModule } from './forwarder-routing.module';
 import { CompaniesComponent } from './components/companies/companies.component';
 import { CompanyComponent } from './components/company/company.component';
 import { CreateShipmentComponent } from './components/create-shipment/create-shipment.component';
+import { ShipmentComponent } from './components/shipment/shipment.component';
 
 
 @NgModule({
   declarations: [
     CompaniesComponent,
     CompanyComponent,
-    CreateShipmentComponent
+    CreateShipmentComponent,
+    ShipmentComponent
   ],
   imports: [
     CommonModule,

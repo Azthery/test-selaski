@@ -52,7 +52,14 @@ router.post('/singup', (req, res) => {
 router.post('/companies', verifyToken, (req, res) => {
     // if(req.data.user_id = 'admin')
     const user_id = req.data.user_id;
-    connection.query('SELECT * FROM companies;',
+
+    const query = `SELECT c.*, COUNT(shipment_id) AS c_shipments
+    FROM companies as c 
+    LEFT JOIN shipments as s
+        on c.company_id = s.company_id
+    GROUP BY company_id;`
+
+    connection.query(query,
     (err, rows, field) => {
         if(!err){
             res.json(rows);
