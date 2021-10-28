@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const secretWord = 'secret';
 
-const connection = require('../connection/connection');
+const connection = require('./connection/connection');
 
 router.get('/', (req, res) =>{
     connection.query('SELECT * FROM users', (err, rows, fields) => {
@@ -30,14 +30,37 @@ router.post('/singin', (req, res) => {
                 res.json('Invalid Username or password')
             }
         } else{
-            console.log(error);
+            console.log(err);
         }
     });
 });
 
-router.post('/test', verifyToken, (req, res) => {
+router.post('/companies', verifyToken, (req, res) => {
     // if(req.data.user_id = 'admin')
-    res.json('Secret info');
+    const user_id = req.data.user_id;
+    connection.query('SELECT * FROM companies;',
+    (err, rows, field) => {
+        if(!err){
+            res.json(rows);
+        } else {
+            res.json('informacion no valida')
+            console.log(err);
+        }
+    })
+})
+
+router.post('/company', verifyToken, (req, res) => {
+    const {company_id} = req.body;
+    connection.query('SELECT * FROM shipments WHERE company_id=? AND active=1',
+    [company_id],
+    (err, rows, field) => {
+        if(!err && rows.length > 0){
+            res.json(rows);
+        } else {
+            res.json('informacion no valida')
+            console.log(err);
+        }
+    })
 })
 
 function verifyToken(req, res, next){

@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-const userRoute = require('./api/routes/users');
-app.use('/users', userRoute);
+const route = require('./api/routes');
+app.use('/', route);
 
 module.exports = app;

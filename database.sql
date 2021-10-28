@@ -30,6 +30,17 @@ CREATE TABLE IF NOT EXISTS shipments (
     active TINYINT(1) NOT NULL DEFAULT 1
 );
 
+INSERT INTO shipments (company_id, c_containers, arrival_at)
+VALUES
+(1, 50, '2021-12-10'),
+(2, 50, '2021-12-10'),
+(3, 50, '2021-12-10'),
+(1, 110, '2021-11-10'),
+(1, 50, '2021-12-10'),
+(1, 100, '2021-12-20'),
+(1, 80, '2021-12-1'),
+(5, 50, '2021-12-10')
+
 INSERT INTO companies (name , rut, contact_name, contact_email)
 VALUES('Antong Holdings', '123456789', 'Luiciana Limarez', 'luicianolimares@example.com'),
 ('CMA CGM', '123123123', 'Elmer Figueroa Arce', 'nosoychayanne@example.com'),
