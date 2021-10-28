@@ -23,7 +23,7 @@ const routes: Routes = [
         loadChildren: () => import('./auth/auth.module').then( m => m.AuthModule)
       },
       {
-        path: '',
+        path: 'companies',
         loadChildren: () => import('./forwarder/forwarder.module').then(m => m.ForwarderModule),
         canActivate: [AuthGuard]
       }

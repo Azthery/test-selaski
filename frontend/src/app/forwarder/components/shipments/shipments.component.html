@@ -1,0 +1,8 @@
+<app-shipment 
+   *ngFor="let shipment of shipments"
+   [shipment]="shipment">
+</app-shipment>
+
+<section *ngIf="shipments.length < 1">
+   <p>there is nothing here</p>
+</section>

@@ -12,7 +12,7 @@ INSERT INTO users(user_name, password) VALUES('camila', '123');
 CREATE TABLE IF NOT EXISTS companies(
     company_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(20) NOT NULL,
-    `rut` VARCHAR(10) NOT NULL,
+    `rut` VARCHAR(10) NOT NULL UNIQUE,
     `active` TINYINT(1) NOT NULL DEFAULT 1,
     contact_name VARCHAR(50) NOT NULL,
     contact_email VARCHAR(100) NOT NULL UNIQUE
@@ -61,3 +61,39 @@ FROM companies as c
 LEFT JOIN shipments as s
     on c.company_id = s.company_id
 GROUP BY company_id;
+
+UPDATE companies 
+SET 
+name = name,
+rut = rut,
+contact_name = 'Yamin Swift',
+contact_email = 'contact_email',
+active = active
+WHERE company_id = company_id
+LIMIT 1;
+
+UPDATE shipments 
+SET 
+c_containers =?,
+company_id =?,
+zarpe_at =?,
+arrival_at =?,
+finshed =?,
+active =?,
+updated_at = CURRENT_TIMESTAMP
+WHERE shipment_id =?
+LIMIT 1;
+
+UPDATE shipments 
+SET 
+c_containers = 58,
+company_id = 1,
+zarpe_at = CURRENT_TIMESTAMP,
+arrival_at =CURRENT_TIMESTAMP,
+finshed = 0,
+active = 1,
+updated_at = CURRENT_TIMESTAMP
+WHERE shipment_id = 1
+LIMIT 1;
+
+SELECT company_id, name FROM companies;

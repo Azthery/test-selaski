@@ -57,6 +57,7 @@ router.post('/companies', verifyToken, (req, res) => {
     FROM companies as c 
     LEFT JOIN shipments as s
         on c.company_id = s.company_id
+    WHERE c.active = 1
     GROUP BY company_id;`
 
     connection.query(query,
@@ -83,6 +84,72 @@ router.post('/company', verifyToken, (req, res) => {
         }
     })
 })
+
+router.post('/companiesnames', verifyToken, (req, res) => {
+    connection.query('SELECT company_id, name FROM companies;',
+    (err, rows, field) => {
+        if(!err && rows.length > 0){
+            res.json(rows);
+        } else {
+            res.json('informacion no valida')
+            console.log(err);
+        }
+    })
+})
+
+router.post('/editcompany', verifyToken, (req, res) => {
+    const {name, rut, contact_name, contact_email, active, company_id} = req.body;
+
+    connection.query(
+    `UPDATE companies 
+    SET 
+    name =?,
+    rut =?,
+    contact_name =?,
+    contact_email =?,
+    active =?
+    WHERE company_id =?
+    LIMIT 1;`,
+    [name, rut, contact_name, contact_email, active, company_id],
+
+    (err, rows, field) => {
+        if(!err){
+            res.json('Company updated!');
+        } else {
+            res.json('informacion no valida')
+            console.log(err);
+        }
+    })
+})
+
+router.post('/editshipment', verifyToken, (req, res) => {
+    const {company_id, c_containers, zarpe_at, arrival_at, finshed, active, shipment_id} = req.body;
+
+    connection.query(
+    `UPDATE shipments 
+    SET 
+    company_id =?,
+    c_containers =?,
+    zarpe_at =?,
+    arrival_at =?,
+    finshed =?,
+    active =?,
+    updated_at = CURRENT_TIMESTAMP
+    WHERE shipment_id =?
+    LIMIT 1;`,
+    [company_id, c_containers, zarpe_at, arrival_at, finshed, active, shipment_id],
+
+    (err, rows, field) => {
+        if(!err){
+            res.json('Shipment updated!');
+        } else {
+            res.json('informacion no valida')
+            console.log(err);
+        }
+    })
+})
+
+
 
 function verifyToken(req, res, next){
     if(!req.headers.authorization) return res.status(401).json('Permission denied')

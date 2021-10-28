@@ -7,23 +7,29 @@ import { Injectable } from '@angular/core';
 export class DataService {
 
   private URL = 'http://localhost:3000';
+  private token:any = localStorage.getItem('token');
 
   constructor(
     private http: HttpClient
     ) { }
 
     companies(): any{
-      const token:any = localStorage.getItem('token');
       const headers =  new HttpHeaders({
-        "Authorization": `bearer ${token}`
+        "Authorization": `bearer ${this.token}`
       })
       return this.http.post(`${this.URL}/companies`, {}, {headers});
     }
 
-    company(id:number): any{
-    const token:any = localStorage.getItem('token');
+    editCompany(data: any): any{
+      const headers =  new HttpHeaders({
+        "Authorization": `bearer ${this.token}`
+      })
+      return this.http.post(`${this.URL}/editcompany`, data, {headers});
+    }
+
+    shipmentsForIdCompany(id:number): any{
     const headers =  new HttpHeaders({
-        "Authorization": `bearer ${token}`
+        "Authorization": `bearer ${this.token}`
       })
     return this.http.post(`${this.URL}/company`, {"company_id": id}, {headers});
   }

@@ -28,11 +28,11 @@ export class CompaniesComponent implements OnInit {
     });
   }
 
-  company(): void{
-    const id = 1;
-    this.dataService.company(id)
-    .subscribe( (res:any) =>{
-      console.log(res)
-    })
-  }
+  // company(): void{
+  //   const id = 1;
+  //   this.dataService.company(id)
+  //   .subscribe( (res:any) =>{
+  //     console.log(res)
+  //   })
+  // }
 }

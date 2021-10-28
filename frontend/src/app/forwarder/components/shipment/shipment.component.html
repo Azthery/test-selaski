@@ -1,1 +1,41 @@
-<p>shipment works!</p>
+<div class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
+    <div class="flex p-3 border-l-8 border-blue-500">
+ 
+       <div class="space-y-1 border-r-2 pr-3">
+          <div class="text-sm leading-5 font-semibold">
+             <span class="text-xs leading-4 font-normal text-gray-500"> ID # </span> {{shipment.shipment_id}}
+          </div>
+          <div class="text-sm leading-5 font-semibold">
+             <span class="text-xs leading-4 font-normal text-gray-500 pr"> CONTAINERS # </span> {{shipment.c_containers}}
+          </div>
+       </div>
+ 
+       <div class="flex-1">
+          <div class="ml-3 space-y-1 border-r-2 pr-3">
+             <div class="text-sm leading-4 font-normal">
+                <span class="text-xs leading-4 font-normal text-gray-500"> Zarpe:</span> {{shipment.zarpe_at | date:'medium'}}
+             </div>
+             <div class="text-sm leading-4 font-normal">
+                <span class="text-xs leading-4 font-normal text-gray-500"> Arrival:</span> {{shipment.arrival_at | date:'medium'}}
+             </div>
+             <div class="text-sm leading-4 font-normal">
+                <span class="text-xs leading-4 font-normal text-gray-500"> Contact email:</span> {{shipment.contact_email}}
+             </div>
+          </div>
+       </div>
+       
+       <div>
+            <div *ngIf="shipment.finshed === 1" class="h-6 ml-3 my-5 bg-red-500 p-1 w-20 text-center flex justify-center">
+                <a class=" text-xs leading-4 font-semibold text-white">FINALIZED</a>
+            </div>
+            <div *ngIf="shipment.finshed === 0" class="h-6 ml-3 my-5 bg-green-500 p-1 w-20 text-center flex justify-center">
+                <a class=" text-xs leading-4 font-semibold text-white">ACTIVE</a>
+             </div>
+       </div>
+       <div>
+          <button class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
+             <img class="h-6 w-6 p-1" src="https://img.icons8.com/material-rounded/24/ffffff/edit--v1.png"/>
+          </button>
+       </div>
+    </div>
+ </div>
