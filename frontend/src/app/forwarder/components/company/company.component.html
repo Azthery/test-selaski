@@ -1,4 +1,5 @@
-<div class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
+<div *ngIf="!editMode"
+class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
    <div class="flex p-3 border-l-8 border-red-600">
 
       <div class="space-y-1 border-r-2 pr-3">
@@ -21,6 +22,14 @@
             </div>
          </div>
       </div>
+
+      <div *ngIf="totalGain" class="border-r-2 pr-3">
+            <div class="ml-3 my-3 border-gray-200 border-2 bg-gray-300 p-1">
+               <div class="uppercase text-xs leading-4 font-medium">Commission</div>
+               <div class="text-center text-sm leading-4 font-semibold text-gray-800">{{totalGain}}</div>
+            </div>
+      </div>
+      
       <div class="border-r-2 pr-3">
          <div >
             <div class="ml-3 my-3 border-gray-200 border-2 bg-gray-300 p-1">
@@ -36,8 +45,55 @@
       </div>
       <div>
          <button class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
-            <img class="h-6 w-6 p-1" src="https://img.icons8.com/material-rounded/24/ffffff/edit--v1.png"/>
+            <img (click)="showEdit()" class="h-6 w-6 p-1" src="https://img.icons8.com/material-rounded/24/ffffff/edit--v1.png"/>
          </button>
       </div>
    </div>
 </div>
+
+
+<!-- edit mode -->
+
+
+<form [formGroup]="form" *ngIf="editMode"
+class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
+   <div class="flex p-3 border-l-8 border-red-600">
+
+      <div class="space-y-1 border-r-2 pr-3">
+         <div class="text-sm leading-5 font-semibold">
+            <input formControlName="name" placeholder="NAME" type="text" 
+            class="h-8 text-xs leading-4 font-normal text-gray-500">
+         </div>
+         <div class="text-sm leading-5 font-semibold">
+            <input formControlName="rut" placeholder="RUT" type="number" 
+            class="h-8 text-xs leading-4 font-normal text-gray-500">
+         </div>
+      </div>
+
+      <div class="flex-1">
+         <div class="ml-3 space-y-1 border-r-2 pr-3">
+            <div class="text-sm leading-4 font-normal">
+               <input formControlName="contact_name" placeholder="CONTACT NAME" type="text" 
+            class="h-8 text-xs leading-4 font-normal text-gray-500">
+            </div>
+            <div class="text-sm leading-4 font-normal">
+               <input formControlName="contact_name" placeholder="CONTACT EMAIL" type="email" 
+            class="h-8 text-xs leading-4 font-normal text-gray-500">
+            </div>
+         </div>
+      </div>
+
+
+      <div>
+         <div class="h-6 ml-3 my-5 bg-blue-500 p-1 w-20 text-center flex justify-center">
+            <button (click)="editCompany()"
+            class=" text-xs leading-4 font-semibold text-white" >SUBMIT</button>
+         </div>
+      </div>
+      <div>
+         <button class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
+            <img (click)="showEdit()" class="h-6 w-6 p-1" src="https://img.icons8.com/ios-glyphs/24/ffffff/delete-sign.png"/>
+         </button>
+      </div>
+   </div>
+</form>

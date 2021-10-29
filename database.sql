@@ -56,7 +56,7 @@ VALUES('Antong Holdings', '123456789', 'Luiciana Limarez', 'luicianolimares@exam
 ('One', '111111111', 'One Uno', 'one1@example.br');
 
 
-SELECT c.*, COUNT(shipment_id) AS c_shipments
+SELECT c.*, COUNT(shipment_id) AS c_shipments, c_containers
 FROM companies as c 
 LEFT JOIN shipments as s
     on c.company_id = s.company_id
@@ -77,7 +77,7 @@ SET
 c_containers =?,
 company_id =?,
 zarpe_at =?,
-arrival_at =?,
+arrival_at = IF(arrival_at != '', arrival_at, arrival_at),
 finshed =?,
 active =?,
 updated_at = CURRENT_TIMESTAMP
@@ -97,3 +97,15 @@ WHERE shipment_id = 1
 LIMIT 1;
 
 SELECT company_id, name FROM companies;
+
+UPDATE companies 
+    SET 
+    contact_name = "Annais"
+    WHERE company_id = 1
+    LIMIT 1;
+
+SELECT SUM(c_containers)
+FROM shipments
+WHERE company_id = 1
+GROUP BY 
+company_id;

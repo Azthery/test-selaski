@@ -1,8 +1,25 @@
-<app-shipment 
-   *ngFor="let shipment of shipments"
-   [shipment]="shipment">
-</app-shipment>
+<section class="mx-6 my-5">
 
-<section *ngIf="shipments.length < 1">
-   <p>there is nothing here</p>
+
+   <div
+   class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
+       <div class="display: flex; border-l-8 border-yellow-500">
+    
+         <div class=" m-3wi border-gray-200 border-2 bg-gray-300 p-1">
+            <div class="text-center text-xs leading-4 font-medium uppercase">total commission</div>
+            <div class="text-center text-sm leading-4 font-semibold text-gray-800">{{numTotalGain | currency}}</div>
+            <div *ngIf="!numTotalGain" class="text-center text-sm leading-4 font-semibold text-gray-800">Nothing</div>
+         </div>
+       </div>
+    </div>
+
+
+   <app-shipment 
+      *ngFor="let shipment of shipments"
+      [shipment]="shipment">
+   </app-shipment>
+   
+   <div *ngIf="shipments.length < 1">
+      <p>there is nothing here</p>
+   </div>
 </section>

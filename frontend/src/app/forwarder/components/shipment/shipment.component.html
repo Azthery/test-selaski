@@ -1,4 +1,5 @@
-<div class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
+<div *ngIf="!editMode"
+class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
     <div class="flex p-3 border-l-8 border-blue-500">
  
        <div class="space-y-1 border-r-2 pr-3">
@@ -18,24 +19,75 @@
              <div class="text-sm leading-4 font-normal">
                 <span class="text-xs leading-4 font-normal text-gray-500"> Arrival:</span> {{shipment.arrival_at | date:'medium'}}
              </div>
-             <div class="text-sm leading-4 font-normal">
-                <span class="text-xs leading-4 font-normal text-gray-500"> Contact email:</span> {{shipment.contact_email}}
-             </div>
           </div>
        </div>
-       
-       <div>
-            <div *ngIf="shipment.finshed === 1" class="h-6 ml-3 my-5 bg-red-500 p-1 w-20 text-center flex justify-center">
-                <a class=" text-xs leading-4 font-semibold text-white">FINALIZED</a>
+
+       <div class="m-3 border-gray-200 border-2 bg-gray-300 p-1">
+         <div class="uppercase text-xs leading-4 font-medium">GAIN</div>
+         <div class="text-center text-sm leading-4 font-semibold text-gray-800">{{gain | currency}}</div>
+      </div>
+
+       <div class="border-gray-200 border-l-2">
+            <div (click)="updateStatusShip()" *ngIf="status === 1" class="h-6 ml-3 my-5 bg-red-500 p-1 w-20 text-center flex justify-center">
+                <button class=" text-xs leading-4 font-semibold text-white">FINALIZED</button>
             </div>
-            <div *ngIf="shipment.finshed === 0" class="h-6 ml-3 my-5 bg-green-500 p-1 w-20 text-center flex justify-center">
-                <a class=" text-xs leading-4 font-semibold text-white">ACTIVE</a>
+            <div (click)="updateStatusShip()" *ngIf="status === 0" class="h-6 ml-3 my-5 bg-green-500 p-1 w-20 text-center flex justify-center">
+                <button class=" text-xs leading-4 font-semibold text-white">ACTIVE</button>
              </div>
        </div>
        <div>
-          <button class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
+          <button (click)="showEdit()" class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
              <img class="h-6 w-6 p-1" src="https://img.icons8.com/material-rounded/24/ffffff/edit--v1.png"/>
           </button>
        </div>
     </div>
  </div>
+
+
+
+<!-- form edit ship -->
+
+
+ 
+ <form [formGroup]="form" *ngIf="editMode"
+ class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
+   <div class="flex p-3 border-l-8 border-blue-500">
+
+      <div class="space-y-1 border-r-2 pr-3">
+         <div class="text-sm leading-5 font-semibold">
+            <input formControlName="company_id" placeholder="COMPANY ID #" type="number" 
+            class="h-8 text-xs leading-4 font-normal text-gray-500">
+         </div>
+
+         <div class="text-sm leading-5 font-semibold">
+            <input formControlName="c_containers" placeholder="CONTAINERS #" 
+            class="h-8 text-xs leading-4 font-normal text-gray-500" type="number">
+         </div>
+      </div>
+
+      <div class="flex-1">
+         <div class="ml-3 space-y-1 border-r-2 pr-3">
+            <div class="text-sm leading-4 font-normal">
+               <span class="mr-2">Zarpe:</span>
+               <input formControlName="zarpe_at" class="h-8 text-sm leading-5" type="date">
+            </div>
+            <div class="text-sm leading-4 font-normal">
+               <span class="mr-1.5">Arrival:</span> 
+               <input formControlName="arrival_at" class="h-8 text-sm leading-5" type="date">
+            </div>
+         </div>
+      </div>
+
+      <div>
+           <div class="h-6 ml-3 my-5 bg-blue-500 p-1 w-20 text-center flex justify-center">
+               <button type="submit" (click)="editshipment($event)"
+               class="text-xs leading-4 font-semibold text-white">SUBMIT</button>
+           </div>
+      </div>
+      <div>
+         <button class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
+            <img (click)="showEdit()" class="h-6 w-6 p-1" src="https://img.icons8.com/ios-glyphs/24/ffffff/delete-sign.png"/>
+         </button>
+      </div>
+   </div>
+</form>
