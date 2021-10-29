@@ -26,6 +26,11 @@ const routes: Routes = [
         path: 'companies',
         loadChildren: () => import('./forwarder/forwarder.module').then(m => m.ForwarderModule),
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'admin',
+        loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
+        canActivate: [AuthGuard]
       }
     ]
   },

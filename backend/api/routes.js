@@ -26,7 +26,7 @@ router.post('/singin', (req, res) => {
             if(rows.length > 0){
                 let data = JSON.stringify(rows[0]);
                 let token = jwt.sign(data, secretWord);
-                res.json({token});
+                res.json({token, rows});
             } else {
                 res.json('Invalid Username or password')
             }
@@ -53,18 +53,36 @@ router.post('/companies', verifyToken, (req, res) => {
     // if(req.data.user_id = 'admin')
     const user_id = req.data.user_id;
 
-    const query = `SELECT c.*, COUNT(shipment_id) AS c_shipments, c_containers
+    connection.query(
+    `SELECT c.*, COUNT(shipment_id) AS c_shipments, c_containers
     FROM companies as c 
     LEFT JOIN shipments as s
         on c.company_id = s.company_id
-    GROUP BY company_id;`
-
-    connection.query(query,
+    WHERE user_id =?
+    GROUP BY company_id;`,
+    [user_id],
     (err, rows, field) => {
         if(!err){
             res.json(rows);
         } else {
-            res.json('informacion no valida')
+            res.json('info invalid')
+            console.log(err);
+        }
+    })
+})
+
+router.post('/all_companies', verifyToken, (req, res) => {
+    connection.query(
+    `SELECT c.*, COUNT(shipment_id) AS c_shipments, c_containers
+    FROM companies as c 
+    LEFT JOIN shipments as s
+        on c.company_id = s.company_id
+    GROUP BY company_id;`,
+    (err, rows, field) => {
+        if(!err){
+            res.json(rows);
+        } else {
+            res.json('info invalid')
             console.log(err);
         }
     })
@@ -78,23 +96,23 @@ router.post('/company', verifyToken, (req, res) => {
         if(!err && rows.length > 0){
             res.json(rows);
         } else {
-            res.json('informacion no valida')
+            res.json('info invalid')
             console.log(err);
         }
     })
 })
 
-router.post('/companiesnames', verifyToken, (req, res) => {
-    connection.query('SELECT company_id, name FROM companies;',
-    (err, rows, field) => {
-        if(!err && rows.length > 0){
-            res.json(rows);
-        } else {
-            res.json('informacion no valida')
-            console.log(err);
-        }
-    })
-})
+// router.post('/companiesnames', verifyToken, (req, res) => {
+//     connection.query('SELECT company_id, name FROM companies;',
+//     (err, rows, field) => {
+//         if(!err && rows.length > 0){
+//             res.json(rows);
+//         } else {
+//             res.json('info invalid')
+//             console.log(err);
+//         }
+//     })
+// })
 
 router.post('/editcompany', verifyToken, (req, res) => {
     const {name, rut, contact_name, contact_email, company_id} = req.body;
@@ -112,7 +130,7 @@ router.post('/editcompany', verifyToken, (req, res) => {
         if(!err){
             res.json(true);
         } else {
-            res.json('informacion no valida')
+            res.json('info invalid')
             console.log(err);
         }
     })
@@ -143,7 +161,7 @@ router.post('/editshipment', verifyToken, (req, res) => {
             console.log('Shipment updated!')
             res.json(true);
         } else {
-            res.json('informacion no valida')
+            res.json('info invalid')
             console.log(err);
         }
     })
@@ -163,7 +181,7 @@ router.post('/updatestatusship', verifyToken, (req, res) => {
         if(!err){
             res.json('Status shipment updated!');
         } else {
-            res.json('informacion no valida')
+            res.json('info invalid')
             console.log(err);
         }
     })
@@ -179,7 +197,27 @@ router.post('/loot', verifyToken, (req, res) => {
         if(!err && rows.length > 0){
             res.json(rows);
         } else {
-            res.json('informacion no valida')
+            res.json('info invalid')
+            console.log(err);
+        }
+    })
+})
+
+router.post('/get_a_company', verifyToken, (req, res) => {
+    const {user_id, company_id} = req.body;
+    connection.query(`
+    UPDATE companies 
+    SET 
+    user_id =?
+    WHERE company_id =?
+    LIMIT 1;
+    `,
+    [user_id, company_id],
+    (err, rows, field) => {
+        if(!err){
+            res.json(rows);
+        } else {
+            res.json('info invalid')
             console.log(err);
         }
     })

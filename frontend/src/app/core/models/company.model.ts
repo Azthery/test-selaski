@@ -5,5 +5,6 @@ export interface company{
     contact_name: string,
     contact_email: string,
     active: number,
-    c_shipments: number
+    c_shipments: number,
+    user_id?: number
 }

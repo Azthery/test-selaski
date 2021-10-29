@@ -11,9 +11,7 @@ export class DataService {
 
   constructor(
     private http: HttpClient
-    ) { 
-      
-    }
+    ) { }
 
   companies(): any{
     const headers =  new HttpHeaders({"Authorization": `bearer ${this.token}`})

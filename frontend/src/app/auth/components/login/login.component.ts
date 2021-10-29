@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
       };
       this.wrongData = false;
       localStorage.setItem('token', res.token);
+      localStorage.setItem('user_id', res.rows[0].user_id);
       this.router.navigate(['/companies']);
     })
   };

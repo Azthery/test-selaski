@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS companies(
     `rut` VARCHAR(10) NOT NULL UNIQUE,
     `active` TINYINT(1) NOT NULL DEFAULT 1,
     contact_name VARCHAR(50) NOT NULL,
+    user_id INTEGER UNSIGNED NOT NULL DEFAULT 1,
     contact_email VARCHAR(100) NOT NULL UNIQUE
 );
 
@@ -109,3 +110,16 @@ FROM shipments
 WHERE company_id = 1
 GROUP BY 
 company_id;
+
+SELECT c.*, COUNT(shipment_id) AS c_shipments, c_containers
+FROM companies as c 
+LEFT JOIN shipments as s
+    on c.company_id = s.company_id
+WHERE user_id = 1
+GROUP BY company_id;
+
+UPDATE companies 
+    SET 
+    user_id =?
+    WHERE company_id =?
+    LIMIT 1;
