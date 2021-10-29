@@ -11,23 +11,26 @@ export class GetACompanyComponent implements OnInit {
 
   @Input()
   company!: company;
-
+  obtained!: boolean;
+  geted = false;
   constructor(
     private adminService: AdminService
   ) { }
 
   ngOnInit(): void {
+    
   }
 
+ 
   getThat(){
-    const id = localStorage.getItem('user_id');
+    const userId = localStorage.getItem('user_id')
     const data = {
-      "user_id": id,
+      "user_id": userId,
       "company_id": this.company.company_id
     };
     this.adminService.getACompany(data)
     .subscribe((res:any) => {
-      console.log(res)
+      this.geted = true
     });
   }
 

@@ -1,125 +1,116 @@
-CREATE DATABASE IF NOT EXISTS forwardsca;
+-- MySQL dump 10.13  Distrib 5.7.36, for Win64 (x86_64)
+--
+-- Host: localhost    Database: forwardsca
+-- ------------------------------------------------------
+-- Server version	5.7.36-log
 
-CREATE TABLE IF NOT EXISTS users(
-    user_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `user_name` VARCHAR(20) NOT NULL UNIQUE,
-    `password` VARCHAR(20) NOT NULL,
-    `active` TINYINT(1) NOT NULL DEFAULT 1
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-INSERT INTO users(user_name, password) VALUES('camila', '123');
+--
+-- Table structure for table `companies`
+--
 
-CREATE TABLE IF NOT EXISTS companies(
-    company_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `name` VARCHAR(20) NOT NULL,
-    `rut` VARCHAR(10) NOT NULL UNIQUE,
-    `active` TINYINT(1) NOT NULL DEFAULT 1,
-    contact_name VARCHAR(50) NOT NULL,
-    user_id INTEGER UNSIGNED NOT NULL DEFAULT 1,
-    contact_email VARCHAR(100) NOT NULL UNIQUE
-);
+DROP TABLE IF EXISTS `companies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `companies` (
+  `company_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `rut` varchar(10) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `contact_name` varchar(50) NOT NULL,
+  `user_id` int(10) unsigned NOT NULL DEFAULT '1',
+  `contact_email` varchar(100) NOT NULL,
+  PRIMARY KEY (`company_id`),
+  UNIQUE KEY `rut` (`rut`),
+  UNIQUE KEY `contact_email` (`contact_email`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE IF NOT EXISTS shipments (
-    shipment_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    c_containers INTEGER UNSIGNED NOT NULL DEFAULT 0,
-    company_id INTEGER UNSIGNED NOT NULL,
-    zarpe_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    arrival_at TIMESTAMP NOT NULL,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    finshed TINYINT(1) NOT NULL DEFAULT 0,
-    active TINYINT(1) NOT NULL DEFAULT 1
-);
+--
+-- Dumping data for table `companies`
+--
 
-INSERT INTO shipments (company_id, c_containers, arrival_at)
-VALUES
-(1, 50, '2021-12-10'),
-(2, 50, '2021-12-10'),
-(3, 50, '2021-12-10'),
-(1, 110, '2021-11-10'),
-(1, 50, '2021-12-10'),
-(1, 100, '2021-12-20'),
-(1, 80, '2021-12-1'),
-(5, 50, '2021-12-10')
+LOCK TABLES `companies` WRITE;
+/*!40000 ALTER TABLE `companies` DISABLE KEYS */;
+INSERT INTO `companies` VALUES (1,'Antong Holdings','123456789',1,'Luiciana Limarez',1,'luicianolimares@example.com'),(2,'CMA CGM','123123123',1,'Elmer Figueroa Arce',2,'nosoychayanne@example.com'),(3,'Cosco Shipping','147258369',1,'Cuzco Jackson',1,'cuzcojackson@example.com'),(4,'Evergreen Line','654321789',1,'Hernan Velazques',1,'everchile@evergrennexample.cl'),(5,'Hamburg Sud','204510701',1,'Tahiel Leone',1,'tleone@example.com'),(6,'Hapag-Lloyd','111222333',1,'Charlotte Carrasco',1,'charrasco@example.com'),(7,'Hyundai','200111222',1,'Liu Rizzo',1,'liuzzo@example.com'),(8,'IRISL Group','101420357',1,'Martin Martini',1,'mamartini@example.com'),(9,'KMTC','146527380',1,'Constanza Schwarz',1,'cschawrz@example.com'),(10,'Maersk','852852852',1,'Camila Bauer',1,'camilab@example.com'),(11,'MSC','456546456',1,'Maxwell Sevillano Carrasco',1,'max@example.com'),(12,'One','111111111',1,'One Uno',1,'one1@example.br');
+/*!40000 ALTER TABLE `companies` ENABLE KEYS */;
+UNLOCK TABLES;
 
-INSERT INTO companies (name , rut, contact_name, contact_email)
-VALUES('Antong Holdings', '123456789', 'Luiciana Limarez', 'luicianolimares@example.com'),
-('CMA CGM', '123123123', 'Elmer Figueroa Arce', 'nosoychayanne@example.com'),
-('Cosco Shipping', '147258369', 'Cuzco Jackson', 'cuzcojackson@example.com'),
-('Evergreen Line', '654321789', 'Hernan Velazques', 'everchile@evergrennexample.cl'),
-('Hamburg Sud', '204510701', 'Tahiel Leone', 'tleone@example.com'),
-('Hapag-Lloyd', '111222333','Charlotte Carrasco', 'charrasco@example.com'),
-('Hyundai', '200111222', 'Liu Rizzo', 'liuzzo@example.com'),
-('IRISL Group', '101420357', 'Martin Martini', 'mamartini@example.com'),
-('KMTC', '146527380', 'Constanza Schwarz', 'cschawrz@example.com'),
-('Maersk', '852852852', 'Camila Bauer', 'camilab@example.com'),
-('MSC', '456546456', 'Maxwell Sevillano Carrasco', 'max@example.com'),
-('One', '111111111', 'One Uno', 'one1@example.br');
+--
+-- Table structure for table `shipments`
+--
 
+DROP TABLE IF EXISTS `shipments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `shipments` (
+  `shipment_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `c_containers` int(10) unsigned NOT NULL DEFAULT '0',
+  `company_id` int(10) unsigned NOT NULL,
+  `zarpe_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `arrival_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `finshed` tinyint(1) NOT NULL DEFAULT '0',
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`shipment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-SELECT c.*, COUNT(shipment_id) AS c_shipments, c_containers
-FROM companies as c 
-LEFT JOIN shipments as s
-    on c.company_id = s.company_id
-GROUP BY company_id;
+--
+-- Dumping data for table `shipments`
+--
 
-UPDATE companies 
-SET 
-name = name,
-rut = rut,
-contact_name = 'Yamin Swift',
-contact_email = 'contact_email',
-active = active
-WHERE company_id = company_id
-LIMIT 1;
+LOCK TABLES `shipments` WRITE;
+/*!40000 ALTER TABLE `shipments` DISABLE KEYS */;
+INSERT INTO `shipments` VALUES (1,40,1,'2021-10-06 03:00:00','2021-10-31 23:09:00','2021-10-28 15:25:20','2021-10-29 03:47:38',0,1),(10,50,1,'2021-10-28 15:28:51','2021-12-10 03:00:00','2021-10-28 15:28:51','2021-10-28 21:36:51',1,1),(11,50,2,'2021-10-28 15:28:51','2021-12-10 03:00:00','2021-10-28 15:28:51','2021-10-29 00:10:16',1,1),(12,50,3,'2021-10-28 15:28:51','2021-12-10 03:00:00','2021-10-28 15:28:51','2021-10-28 15:28:51',0,1),(13,110,1,'2021-10-28 15:28:51','2021-11-10 03:00:00','2021-10-28 15:28:51','2021-10-29 03:47:35',0,1),(14,50,1,'2021-10-28 15:28:51','2021-12-10 03:00:00','2021-10-28 15:28:51','2021-10-28 15:28:51',0,1),(15,100,1,'2021-10-28 15:28:51','2021-12-20 03:00:00','2021-10-28 15:28:51','2021-10-28 15:28:51',0,1),(16,80,1,'2021-10-28 15:28:51','2021-12-01 03:00:00','2021-10-28 15:28:51','2021-10-28 15:28:51',0,1),(17,50,5,'2021-10-28 15:28:51','2021-12-10 03:00:00','2021-10-28 15:28:51','2021-10-28 15:28:51',0,1);
+/*!40000 ALTER TABLE `shipments` ENABLE KEYS */;
+UNLOCK TABLES;
 
-UPDATE shipments 
-SET 
-c_containers =?,
-company_id =?,
-zarpe_at =?,
-arrival_at = IF(arrival_at != '', arrival_at, arrival_at),
-finshed =?,
-active =?,
-updated_at = CURRENT_TIMESTAMP
-WHERE shipment_id =?
-LIMIT 1;
+--
+-- Table structure for table `users`
+--
 
-UPDATE shipments 
-SET 
-c_containers = 58,
-company_id = 1,
-zarpe_at = CURRENT_TIMESTAMP,
-arrival_at =CURRENT_TIMESTAMP,
-finshed = 0,
-active = 1,
-updated_at = CURRENT_TIMESTAMP
-WHERE shipment_id = 1
-LIMIT 1;
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_name` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_name` (`user_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-SELECT company_id, name FROM companies;
+--
+-- Dumping data for table `users`
+--
 
-UPDATE companies 
-    SET 
-    contact_name = "Annais"
-    WHERE company_id = 1
-    LIMIT 1;
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'admin','admin',1),(2,'user','user',1);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-SELECT SUM(c_containers)
-FROM shipments
-WHERE company_id = 1
-GROUP BY 
-company_id;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-SELECT c.*, COUNT(shipment_id) AS c_shipments, c_containers
-FROM companies as c 
-LEFT JOIN shipments as s
-    on c.company_id = s.company_id
-WHERE user_id = 1
-GROUP BY company_id;
-
-UPDATE companies 
-    SET 
-    user_id =?
-    WHERE company_id =?
-    LIMIT 1;
+-- Dump completed on 2021-10-29  1:04:56

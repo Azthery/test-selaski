@@ -28,18 +28,18 @@ class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.
       </div>
 
        <div class="border-gray-200 border-l-2">
-            <div (click)="updateStatusShip()" *ngIf="status === 1" class="h-6 ml-3 my-5 bg-red-500 p-1 w-20 text-center flex justify-center">
-                <button class=" text-xs leading-4 font-semibold text-white">FINALIZED</button>
-            </div>
-            <div (click)="updateStatusShip()" *ngIf="status === 0" class="h-6 ml-3 my-5 bg-green-500 p-1 w-20 text-center flex justify-center">
-                <button class=" text-xs leading-4 font-semibold text-white">ACTIVE</button>
-             </div>
+            <button (click)="updateStatusShip()" *ngIf="status === 1" class="h-6 ml-3 my-5 bg-red-500 p-1 w-20 text-center flex justify-center">
+                <p class=" text-xs leading-4 font-semibold text-white">FINALIZED</p>
+            </button>
+            <button (click)="updateStatusShip()" *ngIf="status === 0" class="h-6 ml-3 my-5 bg-green-500 p-1 w-20 text-center flex justify-center">
+                <p class=" text-xs leading-4 font-semibold text-white">ACTIVE</p>
+             </button>
        </div>
-       <div>
-          <button (click)="showEdit()" class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
+       <button (click)="showEdit()">
+          <div class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
              <img class="h-6 w-6 p-1" src="https://img.icons8.com/material-rounded/24/ffffff/edit--v1.png"/>
-          </button>
-       </div>
+          </div>
+       </button>
     </div>
  </div>
 
