@@ -128,7 +128,7 @@ router.post('/editcompany', verifyToken, (req, res) => {
 
     (err, rows, field) => {
         if(!err){
-            res.json(true);
+            res.json(rows);
         } else {
             res.json('info invalid')
             console.log(err);

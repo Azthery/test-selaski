@@ -10,7 +10,7 @@ import { DataService } from 'src/app/core/services/data/data.service';
 })
 export class CompanyComponent implements OnInit {
 
-  public form: FormGroup = this.buildForm();
+  public form!: FormGroup;
   @Input()
   company!: company;
   public editMode = false;
@@ -26,20 +26,17 @@ export class CompanyComponent implements OnInit {
   }
 
   buildForm(): FormGroup{
+    const company = this.company;
     return this.formBuilder.group({
-      rut: ['', Validators.maxLength(10)],
-      name: ['', Validators.maxLength(20)],
-      contact_name: ['', Validators.maxLength(20)],
-      contact_email: ['', [Validators.email, Validators.maxLength(20)]],
+      name: [company.name, Validators.maxLength(20)],
+      rut: [company.rut, Validators.maxLength(10)],
+      contact_name: [company.contact_name, Validators.maxLength(20)],
+      contact_email: [company.contact_email, [Validators.email, Validators.maxLength(20)]],
     })
   }
 
   editCompany(){
     const value = this.form.value;
-    if(value.rut === '') value.rut = this.company.rut;
-    if(value.name === '') value.name = this.company.name;
-    if(value.contact_name === '') value.contact_name = this.company.contact_name;
-    if(value.contact_email === '') value.contact_email = this.company.contact_email;
 
     this.dataService.editCompany(value).subscribe( (res: any) => {
       if(res){
@@ -48,12 +45,12 @@ export class CompanyComponent implements OnInit {
         this.company.contact_name = value.contact_name;
         this.company.contact_email = value.contact_email;
 
-        this.editMode = false
+        this.editMode = false;
       }
-    })
+    });
   }
 
-  totalGain():any{
+  totalGain():void{
     this.dataService.loot(this.company.company_id)
     .subscribe( (res: any) => {
       this.totalGain = res[0].total_gain;
@@ -61,5 +58,6 @@ export class CompanyComponent implements OnInit {
   }
   showEdit(): void{
     this.editMode = !this.editMode;
+    this.form = this.buildForm();
   }
 }

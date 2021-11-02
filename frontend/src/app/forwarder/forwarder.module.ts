@@ -8,6 +8,7 @@ import { CreateShipmentComponent } from './components/create-shipment/create-shi
 import { ShipmentsComponent } from './components/shipments/shipments.component';
 import { ShipmentComponent } from './components/shipment/shipment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateCompanyComponent } from './components/create-company/create-company.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CompanyComponent,
     CreateShipmentComponent,
     ShipmentsComponent,
-    ShipmentComponent
+    ShipmentComponent,
+    CreateCompanyComponent
   ],
   imports: [
     CommonModule,

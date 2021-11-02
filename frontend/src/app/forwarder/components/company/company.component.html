@@ -56,29 +56,33 @@ class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.
 
 
 <form [formGroup]="form" *ngIf="editMode"
-class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
-   <div class="flex p-3 border-l-8 border-red-600">
+class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5">
+   <div class="flex p-3 border-l-8 border-orange-600 h-32">
 
       <div class="space-y-1 border-r-2 pr-3">
-         <div class="text-sm leading-5 font-semibold">
-            <input formControlName="name" placeholder="NAME" type="text" 
-            class="h-8 text-xs leading-4 font-normal text-gray-500">
+         <div class="relative text-sm leading-5 mb-3">
+            <label for="name" class="absolute left-3 bottom-7 bg-gray-100 h-4 text-gray-500">Name</label>
+            <input formControlName="name" placeholder="NAME" type="text" maxlength="20"
+            class="h-8 text-xs leading-4 font-medium">
          </div>
-         <div class="text-sm leading-5 font-semibold">
-            <input formControlName="rut" placeholder="RUT" type="number" 
-            class="h-8 text-xs leading-4 font-normal text-gray-500">
+         <div class="relative text-sm leading-5 mb-3">
+            <label for="rut" class="absolute left-3 bottom-7 bg-gray-100 h-4 text-gray-500">RUT</label>
+            <input formControlName="rut" placeholder="RUT" type="number" maxlength="10" 
+            class="h-8 text-xs leading-4 font-medium">
          </div>
       </div>
 
       <div class="flex-1">
          <div class="ml-3 space-y-1 border-r-2 pr-3">
-            <div class="text-sm leading-4 font-normal">
-               <input formControlName="contact_name" placeholder="CONTACT NAME" type="text" 
-            class="h-8 text-xs leading-4 font-normal text-gray-500">
+            <div class="relative text-sm leading-4 mb-3">
+               <label for="contact_name" class="absolute left-3 bottom-7 bg-gray-100 h-4 text-gray-500">Contact name</label>
+               <input formControlName="contact_name" placeholder="CONTACT NAME" type="text" maxlength="20"
+            class="h-8 w-56 text-xs leading-4 font-medium">
             </div>
-            <div class="text-sm leading-4 font-normal">
-               <input formControlName="contact_name" placeholder="CONTACT EMAIL" type="email" 
-            class="h-8 text-xs leading-4 font-normal text-gray-500">
+            <div class="relative text-sm leading-4 mb-3">
+               <label for="contact_email" class="absolute left-3 bottom-7 bg-gray-100 h-4 text-gray-500">Contact email</label>
+               <input formControlName="contact_email" placeholder="CONTACT EMAIL" type="email" maxlength="20"
+            class="h-8 w-56 text-xs leading-4 font-medium">
             </div>
          </div>
       </div>
