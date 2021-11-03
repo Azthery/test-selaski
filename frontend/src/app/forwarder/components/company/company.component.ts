@@ -15,6 +15,7 @@ export class CompanyComponent implements OnInit {
   company!: company;
   public editMode = false;
   public gain!:number[];
+  public totalGain!: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,7 +23,7 @@ export class CompanyComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.totalGain();
+    this.getTotalGain();
   }
 
   buildForm(): FormGroup{
@@ -50,7 +51,7 @@ export class CompanyComponent implements OnInit {
     });
   }
 
-  totalGain():void{
+  getTotalGain():void{
     this.dataService.loot(this.company.company_id)
     .subscribe( (res: any) => {
       this.totalGain = res[0].total_gain;

@@ -1,12 +1,14 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
   
-  private URL = 'http://localhost:3000';
+  private URL = environment.API;
   private token:any = localStorage.getItem('token');
 
 

@@ -1,5 +1,5 @@
 <div *ngIf="!editMode"
-class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
+class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-24">
     <div class="flex p-3 border-l-8 border-blue-500">
  
        <div class="space-y-1 border-r-2 pr-3">
@@ -11,8 +11,8 @@ class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.
           </div>
        </div>
  
-       <div class="flex-1">
-          <div class="ml-3 space-y-1 border-r-2 pr-3">
+       <div class="flex-1 border-r-2">
+          <div class="ml-3 space-y-1 pr-3">
              <div class="text-sm leading-4 font-normal">
                 <span class="text-xs leading-4 font-normal text-gray-500"> Zarpe:</span> {{shipment.zarpe_at | date:'medium'}}
              </div>
@@ -22,24 +22,26 @@ class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.
           </div>
        </div>
 
-       <div class="m-3 border-gray-200 border-2 bg-gray-300 p-1">
+       <div class="flex flex-col items-center m-3 border-gray-200 border-2 bg-gray-300 p-1">
          <div class="uppercase text-xs leading-4 font-medium">GAIN</div>
          <div class="text-center text-sm leading-4 font-semibold text-gray-800">{{gain | currency}}</div>
       </div>
 
-       <div class="border-gray-200 border-l-2">
-            <button (click)="updateStatusShip()" *ngIf="status === 1" class="h-6 ml-3 my-5 bg-red-500 p-1 w-20 text-center flex justify-center">
-                <p class=" text-xs leading-4 font-semibold text-white">FINALIZED</p>
-            </button>
-            <button (click)="updateStatusShip()" *ngIf="status === 0" class="h-6 ml-3 my-5 bg-green-500 p-1 w-20 text-center flex justify-center">
-                <p class=" text-xs leading-4 font-semibold text-white">ACTIVE</p>
-             </button>
-       </div>
-       <button (click)="showEdit()">
-          <div class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
-             <img class="h-6 w-6 p-1" src="https://img.icons8.com/material-rounded/24/ffffff/edit--v1.png"/>
-          </div>
-       </button>
+      <div class="flex items-start">
+         <button class="border-gray-200 border-l-2">
+              <div (click)="updateStatusShip()" *ngIf="status === 1" class="h-6 ml-3 my-5 bg-red-500 p-1 w-20 text-center flex justify-center">
+                  <p class=" text-xs leading-4 font-semibold text-white">FINALIZED</p>
+              </div>
+              <div (click)="updateStatusShip()" *ngIf="status === 0" class="h-6 ml-3 my-5 bg-green-500 p-1 w-20 text-center flex justify-center">
+                  <p class=" text-xs leading-4 font-semibold text-white">ACTIVE</p>
+               </div>
+         </button>
+         <button (click)="showEdit()">
+            <div class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
+               <img class="h-6 w-6 p-1" src="https://img.icons8.com/material-rounded/24/ffffff/edit--v1.png"/>
+            </div>
+         </button>
+      </div>
     </div>
  </div>
 
@@ -50,43 +52,48 @@ class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.
 
  
  <form [formGroup]="form" *ngIf="editMode"
- class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
-   <div class="flex p-3 border-l-8 border-blue-500">
+ class="bg-gray-200 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-24">
+   <div class="flex p-3 border-l-8 border-purple-500">
 
       <div class="space-y-1 border-r-2 pr-3">
-         <div class="text-sm leading-5 font-semibold">
-            <input formControlName="company_id" placeholder="COMPANY ID #" type="number" 
-            class="h-8 text-xs leading-4 font-normal text-gray-500">
+         <div class="relative text-sm mb-3">
+            <label for="company_id" class="absolute left-3 bottom-7 bg-gray-200 h-4 text-gray-500">Company ID</label>
+            <input formControlName="company_id" type="number" 
+            class="h-8 text-xs leading-4 font-medium text-gray-500">
          </div>
 
-         <div class="text-sm leading-5 font-semibold">
-            <input formControlName="c_containers" placeholder="CONTAINERS #" 
-            class="h-8 text-xs leading-4 font-normal text-gray-500" type="number">
+         <div class="relative text-sm mb-3">
+            <label for="c_containers" class="absolute left-3 bottom-7 bg-gray-200 h-4 text-gray-500">N° Containers</label>
+            <input formControlName="c_containers" 
+            class="h-8 text-xs leading-4 font-medium text-gray-500" type="number">
          </div>
       </div>
 
       <div class="flex-1">
          <div class="ml-3 space-y-1 border-r-2 pr-3">
-            <div class="text-sm leading-4 font-normal">
-               <span class="mr-2">Zarpe:</span>
-               <input formControlName="zarpe_at" class="h-8 text-sm leading-5" type="date">
+            <div class="relative text-sm mb-3">
+               <label for="zarpe_at" class="absolute left-3 bottom-7 bg-gray-200 h-4 text-gray-500">Date zarpe</label>
+               <input formControlName="zarpe_at" class="h-8 text-sm" type="date">
             </div>
-            <div class="text-sm leading-4 font-normal">
-               <span class="mr-1.5">Arrival:</span> 
-               <input formControlName="arrival_at" class="h-8 text-sm leading-5" type="date">
+            <div class="relative text-sm mb-3">
+               <label for="arrival_at" class="absolute left-3 bottom-7 bg-gray-200 h-4 text-gray-500">Date arrival</label>
+               <input formControlName="arrival_at" class="h-8 text-sm" type="date">
             </div>
          </div>
       </div>
 
-      <div>
-           <div class="h-6 ml-3 my-5 bg-blue-500 p-1 w-20 text-center flex justify-center">
-               <button type="submit" (click)="editshipment($event)"
-               class="text-xs leading-4 font-semibold text-white">SUBMIT</button>
-           </div>
-      </div>
-      <div>
-         <button class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
-            <img (click)="showEdit()" class="h-6 w-6 p-1" src="https://img.icons8.com/ios-glyphs/24/ffffff/delete-sign.png"/>
+      <div class="flex items-start">
+         <button>
+              <div (click)="editshipment($event)" 
+              class="h-6 ml-3 my-5 bg-blue-500 p-1 w-20 text-center flex justify-center">
+                  <p type="submit" class="text-xs leading-4 font-semibold text-white">SUBMIT</p>
+              </div>
+         </button>
+         <button>
+            <div (click)="showEdit()" 
+            class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
+               <img class="h-6 w-6 p-1" src="https://img.icons8.com/ios-glyphs/24/ffffff/delete-sign.png"/>
+            </div>
          </button>
       </div>
    </div>

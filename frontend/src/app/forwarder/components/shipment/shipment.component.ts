@@ -10,7 +10,7 @@ import { DataService } from 'src/app/core/services/data/data.service';
 })
 export class ShipmentComponent implements OnInit {
   
-  public form: FormGroup = this.buildForm();
+  public form!: FormGroup;
   private commission = 5;
   public gain !:number;
   public status!:any;
@@ -28,20 +28,21 @@ export class ShipmentComponent implements OnInit {
     this.status = this.shipment.finshed;
     this.id = this.shipment.shipment_id;
     this.gain = this.commission * this.shipment.c_containers;
-
-    this.form = this.buildForm()
   }
 
   showEdit(): void{
     this.editMode = !this.editMode;
+    this.form = this.buildForm();
   }
 
   private buildForm(): FormGroup{
+    const shipment = this.shipment;
+    console.log(shipment);
     return this.formBuilder.group({
-      company_id: ['', Validators.maxLength(5)],
-      c_containers: ['', Validators.maxLength(5)],
-      zarpe_at: [''],
-      arrival_at: [''],
+      company_id: [shipment.company_id, Validators.maxLength(5)],
+      c_containers: [shipment.c_containers, Validators.maxLength(5)],
+      zarpe_at: [shipment.zarpe_at],
+      arrival_at: [shipment.arrival_at],
       finshed: [this.status, [Validators.required]],
       active: [1 , [Validators.required]],
       shipment_id: [this.id, [Validators.required]],
@@ -51,8 +52,6 @@ export class ShipmentComponent implements OnInit {
   editshipment(event: Event){
     event.preventDefault();
     const value = this.form.value;
-    if(value.c_containers === '') value.c_containers = this.shipment.c_containers;
-    if(value.company_id === '') value.company_id = this.shipment.company_id;
 
     this.dataService.editshipment(value).subscribe( (res: any) => {
       this.shipment.c_containers = value.c_containers;
@@ -60,7 +59,8 @@ export class ShipmentComponent implements OnInit {
       this.shipment.arrival_at = value.arrival_at;
       this.gain = this.commission * this.shipment.c_containers
 
-      this.editMode = false;});
+      this.editMode = false;
+    });
   }
 
   updateStatusShip(){

@@ -27,12 +27,12 @@
        </div>
  
        <div>
-          <button *ngIf="!geted" (click)="getThat()" class="h-6 ml-3 my-5 bg-green-500 p-1 w-20 text-center flex justify-center">
+          <button *ngIf="!obtained" (click)="get()" class="h-6 ml-3 my-5 bg-green-500 p-1 w-20 text-center flex justify-center">
              <p class="text-xs leading-4 font-semibold text-white">GET</p>
           </button>
-          <div *ngIf="geted" class="h-6 ml-3 my-5 bg-gray-300 p-1 w-20 text-center flex justify-center">
-            <p class="text-xs leading-4 font-semibold text-white">GET</p>
-         </div>
+          <button *ngIf="obtained" (click)="drop()" class="h-6 ml-3 my-5 bg-red-500 p-1 w-20 text-center flex justify-center">
+            <p class="text-xs leading-4 font-semibold text-white">OBTAINED</p>
+         </button>
        </div>
        
     </div>

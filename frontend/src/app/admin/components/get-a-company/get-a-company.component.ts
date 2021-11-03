@@ -12,17 +12,21 @@ export class GetACompanyComponent implements OnInit {
   @Input()
   company!: company;
   obtained!: boolean;
-  geted = false;
   constructor(
     private adminService: AdminService
   ) { }
 
   ngOnInit(): void {
-    
+    this.inPossessionOrNot();
   }
 
+  inPossessionOrNot():void {
+    const storageUserId = localStorage.getItem('user_id');
+    const companyUserId = this.company.user_id?.toString();
+    this.obtained = (storageUserId === companyUserId);
+  }
  
-  getThat(){
+  get(): void{
     const userId = localStorage.getItem('user_id')
     const data = {
       "user_id": userId,
@@ -30,7 +34,18 @@ export class GetACompanyComponent implements OnInit {
     };
     this.adminService.getACompany(data)
     .subscribe((res:any) => {
-      this.geted = true
+      this.obtained = true
+    });
+  }
+
+  drop(): void{
+    const data = {
+      "user_id": 0,
+      "company_id": this.company.company_id
+    };
+    this.adminService.getACompany(data)
+    .subscribe((res:any) => {
+      this.obtained = false;
     });
   }
 
