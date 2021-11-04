@@ -30,6 +30,11 @@ export class DataService {
       return this.http.post(`${this.URL}/company`, {"company_id": id}, {headers});
   }
 
+  createShipment(data: any){
+    const headers =  new HttpHeaders({"Authorization": `bearer ${this.token}`})
+    return this.http.post(`${this.URL}/createshipment`, data, {headers});
+  }
+
   editshipment(data: any){
     const headers =  new HttpHeaders({"Authorization": `bearer ${this.token}`})
     return this.http.post(`${this.URL}/editshipment`, data, {headers});

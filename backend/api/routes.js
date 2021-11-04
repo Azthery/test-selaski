@@ -136,30 +136,42 @@ router.post('/editcompany', verifyToken, (req, res) => {
     })
 })
 
-router.post('/editshipment', verifyToken, (req, res) => {
-    let {company_id, c_containers, zarpe_at, arrival_at, finshed, active, shipment_id} = req.body;
+router.post('/createshipment', verifyToken, (req, res) => {
+    let {company_id, c_containers} = req.body;
 
-    if(zarpe_at === '') zarpe_at = 'NULL';
-    if(arrival_at === '') arrival_at = 'NULL'
-    
     connection.query(
-    `UPDATE shipments 
-    SET 
-    company_id =${company_id},
-    c_containers =${c_containers},
-    zarpe_at = IF(${zarpe_at} != NULL, ${zarpe_at}, zarpe_at),
-    arrival_at = IF(${arrival_at} != NULL, ${arrival_at}, arrival_at),
-    finshed =${finshed},
-    active =${active},
-    updated_at = CURRENT_TIMESTAMP
-    WHERE shipment_id =?
-    LIMIT 1;`,
-    [shipment_id],
+    `INSERT INTO shipments (c_containers, company_id) 
+    VALUES(
+        ?,
+        ?);`,
+    [c_containers, company_id],
 
     (err, rows, field) => {
         if(!err){
-            console.log('Shipment updated!')
-            res.json(true);
+            console.log('Shipment added!')
+            res.json(rows);
+        } else {
+            res.json('info invalid')
+            console.log(err);
+        }
+    })
+})
+
+router.post('/editcompany', verifyToken, (req, res) => {
+    const {name, rut, contact_name, contact_email, company_id} = req.body;
+
+    connection.query(`UPDATE companies 
+    SET 
+    name = "${name}",
+    rut = "${rut}",
+    contact_email = "${contact_email}",
+    contact_name = "${contact_name}"
+    WHERE company_id = 1
+    LIMIT 1;`,
+
+    (err, rows, field) => {
+        if(!err){
+            res.json(rows);
         } else {
             res.json('info invalid')
             console.log(err);

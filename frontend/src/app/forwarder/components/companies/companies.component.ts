@@ -7,6 +7,7 @@ import { company } from 'src/app/core/models/company.model';
   templateUrl: './companies.component.html',
   styleUrls: ['./companies.component.scss']
 })
+
 export class CompaniesComponent implements OnInit {
 
   public companiesList !:company[];
@@ -15,24 +16,24 @@ export class CompaniesComponent implements OnInit {
     private dataService: DataService
   ) { 
     this.companies();
-
   }
 
   ngOnInit(): void {
+    
   }
 
-  companies(): any{
+  companies(): void{
     this.dataService.companies().
-    subscribe((res:any) => {
+    subscribe((res:company[]) => {
       this.companiesList = res;
     });
   }
+  
+  buildForm():any {
 
-  // company(): void{
-  //   const id = 1;
-  //   this.dataService.company(id)
-  //   .subscribe( (res:any) =>{
-  //     console.log(res)
-  //   })
-  // }
+  }
+
+  createCompany(): void{
+
+  }
 }

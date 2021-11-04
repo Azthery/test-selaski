@@ -8,6 +8,7 @@ import { DataService } from 'src/app/core/services/data/data.service';
   templateUrl: './company.component.html',
   styleUrls: ['./company.component.scss']
 })
+
 export class CompanyComponent implements OnInit {
 
   public form!: FormGroup;
@@ -56,9 +57,11 @@ export class CompanyComponent implements OnInit {
     .subscribe( (res: any) => {
       this.totalGain = res[0].total_gain;
     })
-  }
+  };
+
   showEdit(): void{
     this.editMode = !this.editMode;
     this.form = this.buildForm();
   }
+
 }

@@ -1,18 +1,78 @@
 <section class="mx-6 my-5">
 
-   <div
-   class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-30">
-       <div class="flex justify-center border-l-8 border-yellow-500">
+   <div *ngIf="!createMode"
+   class="bg-gray-100 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-24">
+      <div class="flex justify-evenly items-center p-3 border-l-8 border-purple-400 h-full">
     
-         <div class=" m-3wi border-gray-200 border-2 p-1">
+         <button (click)="showCreate()"
+         class="whitespace-nowrap inline-flex items-center justify-center
+              px-4 py-2 border border-transparent shadow-sm text-base
+              font-medium text-white bg-green-500 h-12">
+            New shipment
+         </button>
+
+         <div class="bg-gray-300 m-3wi border-2 p-1 h-12">
             <div class="text-center text-xs leading-4 font-medium uppercase">total commission</div>
             <div class="text-center text-sm leading-4 font-semibold text-gray-800">{{numTotalGain | currency}}</div>
             <div *ngIf="!numTotalGain" class="text-center text-sm leading-4 font-semibold text-gray-800">Nothing</div>
          </div>
+
+
        </div>
     </div>
 
 
+    <!-- create mode -->
+    <form [formGroup]="form" *ngIf="createMode"
+    class="bg-gray-200 mx-auto border-gray-500 border rounded-sm text-gray-700 mb-0.5 h-24">
+      <div class="flex p-3 border-l-8 border-purple-400 h-full">
+   
+         <div class="space-y-1 border-r-2 pr-3">
+            <div class="relative text-sm mb-3">
+               <label for="company_id" class="absolute left-3 bottom-7 bg-gray-200 h-4 text-gray-500">Company ID</label>
+               <input formControlName="company_id" type="number" 
+               class="h-8 text-xs leading-4 font-medium text-gray-500">
+            </div>
+   
+            <div class="relative text-sm mb-3">
+               <label for="c_containers" class="absolute left-3 bottom-7 bg-gray-200 h-4 text-gray-500">N° Containers</label>
+               <input formControlName="c_containers" 
+               class="h-8 text-xs leading-4 font-medium text-gray-500" type="number">
+            </div>
+         </div>
+   
+         <div class="flex-1">
+            <div class="ml-3 space-y-1 border-r-2 pr-3">
+               <div class="relative text-sm mb-3">
+                  <label for="zarpe_at" class="absolute left-3 bottom-7 bg-gray-200 h-4 text-gray-500">Date zarpe</label>
+                  <input formControlName="zarpe_at" class="h-8 text-sm" type="date">
+               </div>
+               <div class="relative text-sm mb-3">
+                  <label for="arrival_at" class="absolute left-3 bottom-7 bg-gray-200 h-4 text-gray-500">Date arrival</label>
+                  <input formControlName="arrival_at" class="h-8 text-sm" type="date">
+               </div>
+            </div>
+         </div>
+   
+         <div class="flex items-start">
+            <button>
+                 <div (click)="createShipment($event)" 
+                 class="h-6 ml-3 my-5 bg-blue-500 p-1 w-20 text-center flex justify-center">
+                     <p type="submit" class="text-xs leading-4 font-semibold text-white">SUBMIT</p>
+                 </div>
+            </button>
+            <button>
+               <div (click)="showCreate()" 
+               class="text-gray-100 rounded-sm my-5 ml-2 focus:outline-none bg-gray-500">
+                  <img class="h-6 w-6 p-1" src="https://img.icons8.com/ios-glyphs/24/ffffff/delete-sign.png"/>
+               </div>
+            </button>
+         </div>
+      </div>
+   </form>
+   
+
+   <!-- shipment in database -->
    <app-shipment 
       *ngFor="let shipment of shipments"
       [shipment]="shipment">

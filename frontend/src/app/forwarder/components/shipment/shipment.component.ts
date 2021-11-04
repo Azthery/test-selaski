@@ -37,12 +37,11 @@ export class ShipmentComponent implements OnInit {
 
   private buildForm(): FormGroup{
     const shipment = this.shipment;
-    console.log(shipment);
     return this.formBuilder.group({
       company_id: [shipment.company_id, Validators.maxLength(5)],
       c_containers: [shipment.c_containers, Validators.maxLength(5)],
-      zarpe_at: [shipment.zarpe_at],
-      arrival_at: [shipment.arrival_at],
+      zarpe_at:shipment.zarpe_at.slice(0, 10),
+      arrival_at: shipment.arrival_at.slice(0, 10),
       finshed: [this.status, [Validators.required]],
       active: [1 , [Validators.required]],
       shipment_id: [this.id, [Validators.required]],
@@ -53,7 +52,11 @@ export class ShipmentComponent implements OnInit {
     event.preventDefault();
     const value = this.form.value;
 
-    this.dataService.editshipment(value).subscribe( (res: any) => {
+    value.zarpe_at = this.form.value.zarpe_at + ':00:00.000Z';
+  
+    value.arrival_at = this.form.value.arrival_at + 'T03:00:00.000Z';
+
+    this.dataService.editshipment(value).subscribe( (res: any) => { 
       this.shipment.c_containers = value.c_containers;
       this.shipment.zarpe_at = value.zarpe_at;
       this.shipment.arrival_at = value.arrival_at;
